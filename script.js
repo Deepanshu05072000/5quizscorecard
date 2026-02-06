@@ -25,11 +25,32 @@ const USERS = {
     vocab:{scored:20,total:20}, ca:{scored:15,total:20} }
 };
 
+// ⏰ Lock till 8:35 PM (24-hour format)
+const RESULT_UNLOCK_TIME = { hour: 20, minute: 35 };
+
+function isResultUnlocked() {
+  const now = new Date();
+  const unlock = new Date();
+  unlock.setHours(RESULT_UNLOCK_TIME.hour, RESULT_UNLOCK_TIME.minute, 0, 0);
+  return now >= unlock;
+}
+
 function login() {
+  const err = document.getElementById("error");
+  const lockMsg = document.getElementById("lockMsg");
+
+  // Check time lock
+  if (!isResultUnlocked()) {
+    lockMsg.textContent = "⏰ Results will be available after 8:35 PM.";
+    err.textContent = "";
+    return;
+  } else {
+    lockMsg.textContent = "";
+  }
+
   const roll = document.getElementById("roll").value.trim();
   const password = document.getElementById("password").value.trim();
   const dob = document.getElementById("dob").value.trim();
-  const err = document.getElementById("error");
 
   if (!roll || !password || !dob) {
     err.textContent = "Please fill all fields.";
@@ -75,5 +96,5 @@ function logout() {
   document.getElementById("resultCard").style.display = "none";
   ["roll","password","dob"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("error").textContent = "";
+  document.getElementById("lockMsg").textContent = "";
 }
-
