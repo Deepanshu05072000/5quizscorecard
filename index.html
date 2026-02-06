@@ -11,7 +11,7 @@
 
   <div class="container">
     <div class="content" id="loginCard">
-      <div class="sub">Enter Roll Number, Password, DOB & CAPTCHA</div>
+      <div class="sub">Enter Roll Number, Password & DOB</div>
 
       <div class="form-row">
         <label>Roll Number</label>
@@ -23,14 +23,7 @@
       </div>
       <div class="form-row">
         <label>Date of Birth (DD-MM-YYYY)</label>
-        <input type="text" id="dob" placeholder="e.g. 01-01-2000" />
-      </div>
-      <div class="form-row">
-        <label>CAPTCHA</label>
-        <div>
-          <span id="captchaText" class="captcha"></span>
-          <input type="text" id="captchaInput" placeholder="Enter CAPTCHA" />
-        </div>
+        <input type="text" id="dob" placeholder="e.g. 05-07-2000" />
       </div>
 
       <button class="btn" onclick="login()">Submit</button>
@@ -54,10 +47,8 @@
           <tr><th>Section</th><th>Marks</th></tr>
           <tr><td>Vocab Quiz</td><td id="vocab"></td></tr>
           <tr><td>Current Affairs Quiz</td><td id="ca"></td></tr>
-          <tr><td>Descriptive Quiz</td><td id="desc"></td></tr>
-          <tr><td>Banking Awareness</td><td id="banking"></td></tr>
-          <tr><td>Computer Awareness</td><td id="computer"></td></tr>
         </table>
+        <div class="note">* indicates sectional cut-off not cleared</div>
       </div>
 
       <div class="box">
@@ -66,8 +57,6 @@
           <tr><th>Total Marks</th><td id="total"></td></tr>
           <tr><th>Cut-off</th><td id="cutoff"></td></tr>
           <tr><th>Status</th><td id="status"></td></tr>
-          <tr><th>Rank</th><td id="rank"></td></tr>
-          <tr><th>Percentile</th><td id="percentile"></td></tr>
         </table>
       </div>
 
