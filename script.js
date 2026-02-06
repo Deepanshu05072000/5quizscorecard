@@ -76,3 +76,4 @@ function logout() {
   ["roll","password","dob"].forEach(id => document.getElementById(id).value = "");
   document.getElementById("error").textContent = "";
 }
+
