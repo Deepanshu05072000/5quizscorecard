@@ -116,4 +116,3 @@ function logout() {
 
   CURRENT_CAPTCHA = genCaptcha();
 }
-
