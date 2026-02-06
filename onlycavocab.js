@@ -1,4 +1,3 @@
-// ===== CONFIG =====
 const CUTOFF = 30; // Overall cut-off for Vocab + CA (out of 40)
 
 const SECTIONAL_CUTOFF = {
@@ -6,7 +5,6 @@ const SECTIONAL_CUTOFF = {
   ca: 15
 };
 
-// ===== USERS DATA =====
 const USERS = {
   "9151701": { password: "91517001", dob:"05-07-2000", name:"Deepanshu Yadav",
     vocab:{scored:16,total:20}, ca:{scored:17,total:20} },
@@ -27,53 +25,23 @@ const USERS = {
     vocab:{scored:20,total:20}, ca:{scored:15,total:20} }
 };
 
-// ===== CAPTCHA =====
-function genCaptcha() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let s = "";
-  for (let i = 0; i < 5; i++) {
-    s += chars[Math.floor(Math.random() * chars.length)];
-  }
-
-  const el = document.getElementById("captchaText");
-  if (el) el.textContent = s;
-  return s;
-}
-
-let CURRENT_CAPTCHA = "";
-
-// Generate CAPTCHA only after DOM is ready
-window.addEventListener("DOMContentLoaded", () => {
-  CURRENT_CAPTCHA = genCaptcha();
-});
-
-// ===== LOGIN LOGIC =====
 function login() {
   const roll = document.getElementById("roll").value.trim();
   const password = document.getElementById("password").value.trim();
   const dob = document.getElementById("dob").value.trim();
-  const captchaInput = document.getElementById("captchaInput").value.trim().toUpperCase();
   const err = document.getElementById("error");
 
-  if (!roll || !password || !dob || !captchaInput) {
+  if (!roll || !password || !dob) {
     err.textContent = "Please fill all fields.";
-    return;
-  }
-
-  if (captchaInput !== CURRENT_CAPTCHA) {
-    err.textContent = "Invalid CAPTCHA. Please try again.";
-    CURRENT_CAPTCHA = genCaptcha();
     return;
   }
 
   if (!USERS[roll] || USERS[roll].password !== password || USERS[roll].dob !== dob) {
     err.textContent = "Invalid credentials. Please check Roll No, Password or DOB.";
-    CURRENT_CAPTCHA = genCaptcha();
     return;
   }
 
   const u = USERS[roll];
-
   const totalObtained = (u.vocab.scored + u.ca.scored).toFixed(1);
 
   const vocabClear = u.vocab.scored >= SECTIONAL_CUTOFF.vocab;
@@ -82,11 +50,9 @@ function login() {
 
   const finalStatus = vocabClear && caClear && overallClear;
 
-  // Show details
   document.getElementById("name").textContent = u.name;
   document.getElementById("rollShow").textContent = roll;
 
-  // ⭐ Star mark failed sections
   document.getElementById("vocab").textContent =
     `${u.vocab.scored}/${u.vocab.total}${vocabClear ? "" : " *"}`;
 
@@ -104,15 +70,9 @@ function login() {
   document.getElementById("resultCard").style.display = "block";
 }
 
-// ===== LOGOUT =====
 function logout() {
   document.getElementById("loginCard").style.display = "block";
   document.getElementById("resultCard").style.display = "none";
-
-  ["roll", "password", "dob", "captchaInput"].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = "";
-  });
-
-  CURRENT_CAPTCHA = genCaptcha();
+  ["roll","password","dob"].forEach(id => document.getElementById(id).value = "");
+  document.getElementById("error").textContent = "";
 }
